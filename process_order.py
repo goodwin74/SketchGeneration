@@ -226,7 +226,7 @@ if __name__ == '__main__':
         print('stoke number',lenStroke)
         if not animArg:
             Freq = lenStroke
-        barP = IncrementalBar('Progress', max = lenStroke)
+        barP = IncrementalBar('Progress stroke', max = lenStroke)
         # cv2.imwrite(output_path + "/draw.png", now_)
         # cv2.imshow('draw', now_)
         # cv2.waitKey(0) 
@@ -283,6 +283,7 @@ if __name__ == '__main__':
                 cv2.waitKey(1)   
 
             step += 1
+            barP.next()
             if step % Freq == 0:
                 # if step > Freq: # not first time 
                 #     before = cv2.imread(output_path + "/process/{0:04d}.png".format(int(step/Freq)-1), cv2.IMREAD_GRAYSCALE)
@@ -296,7 +297,7 @@ if __name__ == '__main__':
                 #     now = now[int((H-h0)/2):int((H-h0)/2)+h0, int((W-w0)/2):int((W-w0)/2)+w0]
                 
                 cv2.imwrite(output_path + "/process/{0:04d}.jpg".format(int(step/Freq)), result)
-                bar.next()
+                
                 # cv2.imshow('step', canvas)
                 # cv2.waitKey(0)  
         if step % Freq != 0:
@@ -304,7 +305,7 @@ if __name__ == '__main__':
             cv2.imwrite(output_path + "/process/{0:04d}.jpg".format(step), result)     
 
         cv2.destroyAllWindows()
-        bar.finish()
+        barP.finish()
         time_end=time.time()
         print('total time',time_end-time_start)
         print('stoke number',len(stroke_sequence))
