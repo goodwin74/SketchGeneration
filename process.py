@@ -25,17 +25,18 @@ from extract import extract_pro
 
 def createParser ():
     parser = argparse.ArgumentParser()
-    parser.add_argument ('-i', '--input', default='/content/SketchGeneration/input/cat.png')
+    parser.add_argument ('-i', '--inputfile', default='/content/SketchGeneration/input/cat.png')
  
     return parser
 
 parser = createParser()
 namespaceArg = parser.parse_args(sys.argv[1:])
-if !os.path.isfile(namespaceArg.input):
+print(">>>"+namespaceArg.inputfile)
+if not os.path.exists(namespaceArg.inputfile):
     raise ValueError("File not found!")
 # args
-input_path = namespaceArg.input
-output_path = './output' 
+input_path = namespaceArg.inputfile
+output_path = os.path.join(os.path.dirname(__file__),'output')
 
 np.random.seed(1)
 n =  7                 # Quantization order
