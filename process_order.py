@@ -16,17 +16,20 @@ from tools import *
 from ETF.edge_tangent_flow import *
 from deblue import deblue
 from quicksort import *
+from progress.bar import IncrementalBar
 
 def createParser ():
     parser = argparse.ArgumentParser()
-    parser.add_argument ('-i', '--inputfile', default='/content/SketchGeneration/input/cat.png')
+    parser.add_argument ('-i', '--inputfile', default='/content/SketchGeneration/input/cat.jpg')
     parser.add_argument ('-vp', '--procvisible', default='no')
+    parser.add_argument ('-an', '--anim', default='no')
  
     return parser
 
 parser = createParser()
 namespaceArg = parser.parse_args(sys.argv[1:])
 procVisArg = namespaceArg.procvisible=="yes"
+animArg = namespaceArg.anim=="yes"
 print(">>>"+namespaceArg.inputfile)
 if not os.path.exists(namespaceArg.inputfile):
     raise ValueError("File not found!")
@@ -219,7 +222,11 @@ if __name__ == '__main__':
 
         time_end=time.time()
         print('total time',time_end-time_start)
-        print('stoke number',len(stroke_sequence))
+        lenStroke = len(stroke_sequence)
+        print('stoke number',lenStroke)
+        if not animArg:
+            Freq = lenStroke
+        barP = IncrementalBar('Progress', max = lenStroke)
         # cv2.imwrite(output_path + "/draw.png", now_)
         # cv2.imshow('draw', now_)
         # cv2.waitKey(0) 
@@ -289,6 +296,7 @@ if __name__ == '__main__':
                 #     now = now[int((H-h0)/2):int((H-h0)/2)+h0, int((W-w0)/2):int((W-w0)/2)+w0]
                 
                 cv2.imwrite(output_path + "/process/{0:04d}.jpg".format(int(step/Freq)), result)
+                bar.next()
                 # cv2.imshow('step', canvas)
                 # cv2.waitKey(0)  
         if step % Freq != 0:
@@ -296,6 +304,7 @@ if __name__ == '__main__':
             cv2.imwrite(output_path + "/process/{0:04d}.jpg".format(step), result)     
 
         cv2.destroyAllWindows()
+        bar.finish()
         time_end=time.time()
         print('total time',time_end-time_start)
         print('stoke number',len(stroke_sequence))
