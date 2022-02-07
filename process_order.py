@@ -20,11 +20,13 @@ from quicksort import *
 def createParser ():
     parser = argparse.ArgumentParser()
     parser.add_argument ('-i', '--inputfile', default='/content/SketchGeneration/input/cat.png')
+    parser.add_argument ('-vp', '--procvisible', default='no')
  
     return parser
 
 parser = createParser()
 namespaceArg = parser.parse_args(sys.argv[1:])
+procVisArg = namespaceArg.procvisible=="yes"
 print(">>>"+namespaceArg.inputfile)
 if not os.path.exists(namespaceArg.inputfile):
     raise ValueError("File not found!")
@@ -47,7 +49,7 @@ edge_CLAHE = True
 draw_new = True
 random_order = False
 ETF_order = True
-process_visible = True
+process_visible = procVisArg
 
 if __name__ == '__main__': 
   
