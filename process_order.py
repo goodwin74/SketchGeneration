@@ -317,7 +317,8 @@ if __name__ == '__main__':
         edge = HistogramEqualization(edge)
 
     cv2.imwrite(output_path + '/edge.jpg', edge)
-    cv2.imshow("edge",edge)
+    if process_visible == True:
+     cv2.imshow("edge",edge)
 
 
     ############# merge #############
@@ -333,7 +334,8 @@ if __name__ == '__main__':
 
     cv2.imwrite(output_path + '/result.jpg', result)
     # cv2.imwrite(output_path + "/process/{0:04d}.png".format(step+1), result)
-    cv2.imshow("result",result)
+    if process_visible == True:
+     cv2.imshow("result",result)
 
     
     # deblue
@@ -346,6 +348,7 @@ if __name__ == '__main__':
     img_yuv[:,:,0] = result
     img_rgb = cv2.cvtColor(img_yuv, cv2.COLOR_YUV2BGR) 
 
-    cv2.imshow("RGB",img_rgb)
+    if process_visible == True:
+     cv2.imshow("RGB",img_rgb)
     cv2.waitKey(0)
     cv2.imwrite(output_path + "/result_RGB.jpg",img_rgb)
