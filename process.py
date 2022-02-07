@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import time 
 import sys
 import os
+import argparse
 
 from LDR import *
 from tone import *
@@ -22,8 +23,18 @@ from Edge.pencil import *
 from deblue import deblue
 from extract import extract_pro
 
+def createParser ():
+    parser = argparse.ArgumentParser()
+    parser.add_argument ('-i', '--input', default='/content/SketchGeneration/input/cat.png')
+ 
+    return parser
+
+parser = createParser()
+namespaceArg = parser.parse_args(sys.argv[1:])
+if !os.path.isfile(namespaceArg.input):
+    raise ValueError("File not found!")
 # args
-input_path = './input/jm.png'
+input_path = namespaceArg.input
 output_path = './output' 
 
 np.random.seed(1)
